@@ -26,7 +26,9 @@ import (
 	"unsafe"
 )
 
-const baseURL = "https://huggingface.co"
+const HFEndpoint = "HF_ENDPOINT"
+
+var baseURL = "https://huggingface.co"
 
 // List of necessary tokenizer files and their mandatory status.
 // True means mandatory, false means optional.
@@ -470,4 +472,12 @@ func (t *Tokenizer) Decode(tokenIDs []uint32, skipSpecialTokens bool) string {
 
 func (t *Tokenizer) VocabSize() uint32 {
 	return uint32(C.tokenizers_vocab_size(t.tokenizer))
+}
+
+func getBaseUrl() string {
+	val := os.Getenv(HFEndpoint)
+	if val != "" {
+		baseURL = val
+	}
+	return baseURL
 }
