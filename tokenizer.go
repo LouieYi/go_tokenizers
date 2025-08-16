@@ -190,7 +190,7 @@ func FromPretrained(modelID string, opts ...TokenizerConfigOption) (*Tokenizer, 
 	}
 
 	// Construct the model URL
-	modelURL := fmt.Sprintf("%s/%s/resolve/main", baseURL, modelID)
+	modelURL := fmt.Sprintf("%s/%s/resolve/main", getBaseURL(), modelID)
 
 	// Determine the download directory
 	var downloadDir string
@@ -474,7 +474,7 @@ func (t *Tokenizer) VocabSize() uint32 {
 	return uint32(C.tokenizers_vocab_size(t.tokenizer))
 }
 
-func getBaseUrl() string {
+func getBaseURL() string {
 	val := os.Getenv(HFEndpoint)
 	if val != "" {
 		baseURL = val
